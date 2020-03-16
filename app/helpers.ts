@@ -9,7 +9,6 @@ export const connectMongoDB  = new Promise<void>(resolve => {
             console.log(err.message);
         }else{
             console.log("Conexion exitosa");
-            
         }
         resolve();
     });
