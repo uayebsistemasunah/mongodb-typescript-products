@@ -1,7 +1,7 @@
 import mongoose = require("mongoose");
 import {connectMongoDB} from "./helpers"
 
-interface IProveedor extends mongoose.Document { 
+export interface IProveedor extends mongoose.Document { 
     name: string;
     direccion: string;
     tipo: string;
@@ -31,4 +31,17 @@ export const CreateProveedor = async function(name: string, direccion: string, t
         }
     } );
 }
+
+export function getProveedor(_name: string):Promise<any>{
+    return new Promise<any>( resolve => {
+        Proveedor.findOne({ name: _name}, (err:any,data:any) => {
+            if(err){
+                resolve({});
+            }else{
+                resolve(data);
+            }
+        } );
+    });
+}
+
 
