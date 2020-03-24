@@ -21,11 +21,11 @@ const ProductoSchema = new mongoose.Schema({
 
 export const Producto = mongoose.model<IProducts>("Producto", ProductoSchema);
 
-export const CreateProduct = async function(nameProveedor:string,name:string, precio_compra:number,precio_venta:number,cantidad:number){
+export const CreateProduct = async function(proveedor:any,name:string, precio_compra:number,precio_venta:number,cantidad:number){
     //Conectar con la base de datos
     await connectMongoDB;
     //Obtener el proveedor en funcion del nombre
-    const prov:any = await getProveedor(nameProveedor);
+    const prov:any = await getProveedor(proveedor);
 
     //persistencia de nuestro producto
     const p = new Producto();
@@ -43,4 +43,27 @@ export const CreateProduct = async function(nameProveedor:string,name:string, pr
         }
     });
 }
+
+export const deleteProduct = async function(filter:any){
+    await connectMongoDB;
+    Producto.deleteMany(filter,(err:any, result:any)=>{
+        if(err){
+            console.log(err);            
+        }else{
+            console.log(result.n);
+        }
+    })
+}
+
+export const UpdateProduct = async function(filter:any,update:any){
+    await connectMongoDB;
+    Producto.updateMany(filter,update,(err:any,result:any)=>{
+        if(err){
+            console.log(err.message);
+        }else{
+            console.log(result);
+        }
+    });
+}
+
 
